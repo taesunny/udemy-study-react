@@ -1,13 +1,13 @@
 import React from "react";
 
 class SearchBar extends React.Component {
-    state = { term: "Hi there!!!" };
+    state = { term: "" };
 
     // onFormSubmit(event) { } -> this is undefined inside the left style function
     onFormSubmit = (event) => {
         event.preventDefault(); // it prevents to refresh page
 
-        this.props.onSubmit(event.state.term);
+        this.props.onSubmit(this.state.term);
     };
 
     render() {
@@ -21,7 +21,7 @@ class SearchBar extends React.Component {
                             value={this.state.term}
                             onChange={(e) =>
                                 this.setState({
-                                    term: e.target.value.toUpperCase,
+                                    term: e.target.value,
                                 })
                             }
                         ></input>
