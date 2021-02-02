@@ -6,17 +6,18 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
     const ref = useRef();
 
     useEffect(() => {
-        document.body.addEventListener(
-            "click",
-            (event) => {
-                if (ref.current && ref.current.contains(event.target)) {
-                    return;
-                }
+        const onBodyClick = (event) => {
+            if (ref.current && ref.current.contains(event.target)) {
+                return;
+            }
 
-                setOpen(false);
-            },
-            { capture: true }
-        );
+            setOpen(false);
+        };
+        document.body.addEventListener("click", onBodyClick, { capture: true });
+
+        return () => { // clean up func, it will run even if Dropdown is removed.
+            document.body.removeEventListener("click", onBodyClick);
+        };
     }, []);
 
     const renderedOptions = options.map((option) => {
